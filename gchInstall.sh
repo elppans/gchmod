@@ -21,6 +21,15 @@ case $@ in
 esac
 #help
 
+##git
+if ( whereis git | grep bin ) >> /dev/null ;then
+	echo "Iniciando o download e configuração dos arquivos..."
+  else
+	echo "Deve ter o \"git\" instalado no sistema!"
+	exit 0
+fi
+##git
+
 ### DIRINST
 clear
 echo -e " Digite o local onde quer instalar o Grand Chase History:"
