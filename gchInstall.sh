@@ -72,6 +72,7 @@ if [ -e "$PWDIR/gcHistory" ];then
 	git fetch origin
 	git reset --hard origin/master
 	echo "PATH=\$PATH:$PWDIR" >> $HOME/.bashrc
+	PATH=\$PATH:$PWDIR
 fi
 
 if [ -d "$GCPATH" ];then
