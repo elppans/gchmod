@@ -21,6 +21,23 @@ case $@ in
 esac
 #help
 
+#File
+if [ -z $@ ];then
+	echo "Modo somente criar a máquina virtual..."
+	read -t 5
+  else
+	RLSET=`readlink -m "$@"`
+
+  if [ -e $RLSET ];then
+	clear
+     else
+	echo "O arquivo especificado não existe!"
+	exit 0
+  fi
+	
+fi
+#File
+
 ##git
 if ( whereis git | grep bin ) >> /dev/null ;then
 	echo "Iniciando o download e configuração dos arquivos..."
@@ -96,7 +113,6 @@ if [ -z "$@" ];then
 	exit 0
    else
 	clear
-	RLSET=`readlink -m "$@"`
 	bash "$PWDIR/gcHistory" --install "$RLSET"
 fi
      else
