@@ -24,8 +24,10 @@ esac
 ##git
 if ( whereis git | grep bin ) >> /dev/null ;then
 	echo "Iniciando o download e configuração dos arquivos..."
+	read -t 3
   else
 	echo "Deve ter o \"git\" instalado no sistema!"
+	read -t 5
 	exit 0
 fi
 ##git
@@ -33,9 +35,10 @@ fi
 ### DIRINST
 clear
 echo -e " Digite o local onde quer instalar o Grand Chase History:"
-echo -e " Se omitido, o jogo será instalado em /home/USER/.gch"
 echo -e " Exemplo: /home/USER/jogo"
-read DIRGCINS
+echo -e "\n Se omitido, o jogo será instalado em \"$HOME/.gch\".\n"
+
+read -p " Local do jogo [ ENTER para o padrão ] : " DIRGCINS
 
 if [ -z $DIRGCINS ];then
 	DIRGCINS="$HOME/.gch"
