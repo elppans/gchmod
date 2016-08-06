@@ -96,7 +96,8 @@ if [ -z "$@" ];then
 	exit 0
    else
 	clear
-	bash "$PWDIR/gcHistory" --install "$@"
+	RLSET=`readlink -m "$@"`
+	bash "$PWDIR/gcHistory" --install "$RLSET"
 fi
      else
 	echo "Erro, o comando \"gcHistory\" não existe"
