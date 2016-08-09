@@ -114,7 +114,7 @@ if [ -z "$@" ];then
    else
 	clear
 	bash "$PWDIR/gcHistory" --install "$RLSET"
-	PATH=\$PATH:$PWDIR
+	bash $HOME/.bashrc
 fi
      else
 	echo "Erro, o comando \"gcHistory\" não existe"
