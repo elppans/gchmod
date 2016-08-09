@@ -100,7 +100,11 @@ if [ -e "$PWDIR/gcHistory" ];then
 	cp -rf $PWDIR/gcmd/ico $PWDIR
 	git fetch origin
 	git reset --hard origin/master
+   if ( cat $HOME/.bashrc | grep -i "PATH=\$PATH:$PWDIR" );then
+	echo "Path OK!"
+      else
 	echo "PATH=\$PATH:$PWDIR" >> $HOME/.bashrc
+   fi
 fi
 
 if [ -d "$GCPATH" ];then
@@ -114,6 +118,9 @@ if [ -z "$@" ];then
    else
 	clear
 	bash "$PWDIR/gcHistory" --install "$RLSET"
+	unset WINDIR
+	unset WINLIB
+	unset GCPATH
 	bash $HOME/.bashrc
 fi
      else
