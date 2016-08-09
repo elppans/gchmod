@@ -75,6 +75,7 @@ PWDIR=`pwd`
 WINDIR="$PWDIR/bin"
 WINLIB="$PWDIR/lib"
 GCPATH="$PWDIR/gchmod"
+GCDIR="$GCPATH/drive_c/Program Files/Grand Chase History"
 
 ### Install
 if [ -e "$PWDIR/gcHistory" ];then
@@ -84,6 +85,7 @@ if [ -e "$PWDIR/gcHistory" ];then
 	cd -
 	cp -rf $PWDIR/gcmd/gcHistory $PWDIR
 	cp -rf $PWDIR/gcmd/ico $PWDIR
+	cp -rf $PWDIR/gcmd/*.dat $GCDIR
 	git fetch origin
 	git reset --hard origin/master
    else
@@ -98,6 +100,7 @@ if [ -e "$PWDIR/gcHistory" ];then
 	git clone https://github.com/elppans/gcHistory $PWDIR/gcmd
 	cp -rf $PWDIR/gcmd/gcHistory $PWDIR
 	cp -rf $PWDIR/gcmd/ico $PWDIR
+	cp -rf $PWDIR/gcmd/*.dat $GCDIR
 	git fetch origin
 	git reset --hard origin/master
    if ( cat $HOME/.bashrc | grep -i "PATH=\$PATH:$PWDIR" );then
@@ -121,7 +124,8 @@ if [ -z "$@" ];then
 	unset WINDIR
 	unset WINLIB
 	unset GCPATH
-	bash $HOME/.bashrc
+	unset GCDIR
+	. $HOME/.bashrc
 fi
      else
 	echo "Erro, o comando \"gcHistory\" não existe"
