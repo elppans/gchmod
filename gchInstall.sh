@@ -22,13 +22,13 @@ esac
 #help
 
 #File
-if [ -z $@ ];then
+if [ -z "$@" ];then
 	echo "Modo somente criar a máquina virtual..."
 	read -t 5
   else
 	RLSET=`readlink -m "$@"`
 
-  if [ -e $RLSET ];then
+  if [ -e "$RLSET" ];then
 	clear
      else
 	echo "O arquivo especificado não existe!"
@@ -57,7 +57,7 @@ echo -e "\n Se omitido, o jogo será instalado em \"$HOME/.gch\".\n"
 
 read -p " Local do jogo [ ENTER para o padrão ] : " DIRGCINS
 
-if [ -z $DIRGCINS ];then
+if [ -z "$DIRGCINS" ];then
 	DIRGCINS="$HOME/.gch"
 fi
 
@@ -103,7 +103,7 @@ if [ -e "$PWDIR/gcHistory" ];then
 	cp -rf $PWDIR/gcmd/*.dat $GCDIR
 	git fetch origin
 	git reset --hard origin/master
-   if ( cat $HOME/.bashrc | grep -i "PATH=\$PATH:$PWDIR" );then
+   if ( cat "$HOME/.bashrc" | grep -i "PATH=\$PATH:$PWDIR" );then
 	echo "Path OK!"
       else
 	echo "PATH=\$PATH:$PWDIR" >> $HOME/.bashrc
