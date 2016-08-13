@@ -107,6 +107,7 @@ if [ -e "$PWDIR/gcHistory" ];then
 	echo "Path OK!"
       else
 	echo "PATH=\$PATH:$PWDIR" >> $HOME/.bashrc
+	alias gcHistory="$PWDIR/gcHistory"
    fi
 fi
 
@@ -121,11 +122,6 @@ if [ -z "$@" ];then
    else
 	clear
 	bash "$PWDIR/gcHistory" --install "$RLSET"
-	unset WINDIR
-	unset WINLIB
-	unset GCPATH
-	unset GCDIR
-	. $HOME/.bashrc
 fi
      else
 	echo "Erro, o comando \"gcHistory\" não existe"
