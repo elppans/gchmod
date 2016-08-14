@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #help
-case $@ in
+case "$@" in
 	-h|--help)
 	echo "
  "$0", um aplicativo para ajudar a instalar a Máquina Virtual e o Grand Chase History de forma fácil.
@@ -21,10 +21,27 @@ case $@ in
 esac
 #help
 
+###Section
+SECTION="/bin/bash"
+###Section
+
+### Setup
+INSTA=`dirname $0`
+
+cd "$INSTA" 
+PWDIA=`pwd`
+PWSET="$PWDIA/setup.exe"
+
+### Setup
+
 #File
 if [ -z "$@" ];then
-	echo "Modo somente criar a máquina virtual..."
+ if [ -e "$PWSET" ];then
+	RLSET=`readlink -m "$PWSET"`
+   else
+	echo "Modo somente criar/atualizar a máquina virtual..."
 	read -t 5
+ fi
   else
 	RLSET=`readlink -m "$@"`
 
@@ -69,23 +86,24 @@ if [ -d "$DIRGCINS" ];then
 ###  DIRNAME
 INSTDIR=`dirname $0`
 
-cd $INSTDIR 
+cd "$INSTDIR" 
 PWDIR=`pwd`
 
 WINDIR="$PWDIR/bin"
 WINLIB="$PWDIR/lib"
 GCPATH="$PWDIR/gchmod"
 GCDIR="$GCPATH/drive_c/Program Files/Grand Chase History"
+GCEXEC="$GCDIR/GrandChase.exe"
 
 ### Install
 if [ -e "$PWDIR/gcHistory" ];then
 	git pull https://github.com/elppans/wine-staging-1.9.15_IndexVertexBlending-1.9.11.i686
-	cd $PWDIR/gcmd
+	cd "$PWDIR/gcmd"
 	git pull https://github.com/elppans/gcHistory
 	cd -
-	cp -rf $PWDIR/gcmd/gcHistory $PWDIR
-	cp -rf $PWDIR/gcmd/ico $PWDIR
-	cp -rf $PWDIR/gcmd/*.dat $GCDIR
+	cp -rf "$PWDIR/gcmd/gcHistory" "$PWDIR"
+	cp -rf "$PWDIR/gcmd/ico" "$PWDIR"
+	cp -rf "$PWDIR/gcmd/NewOption.dat" "$GCDIR"
 	git fetch origin
 	git reset --hard origin/master
    else
@@ -96,32 +114,71 @@ if [ -e "$PWDIR/gcHistory" ];then
 	echo "Falha no Download do Wine!"
 	exit 0
  fi
-	mkdir -p $PWDIR/gcmd
-	git clone https://github.com/elppans/gcHistory $PWDIR/gcmd
-	cp -rf $PWDIR/gcmd/gcHistory $PWDIR
-	cp -rf $PWDIR/gcmd/ico $PWDIR
-	cp -rf $PWDIR/gcmd/*.dat $GCDIR
+	mkdir -p "$PWDIR/gcmd"
+	git clone https://github.com/elppans/gcHistory "$PWDIR/gcmd"
+	cp -rf "$PWDIR/gcmd/gcHistory" "$PWDIR"
+	cp -rf "$PWDIR/gcmd/ico" "$PWDIR"
+	cp -rf "$PWDIR/gcmd/NewOption.dat" "$GCDIR"
 	git fetch origin
 	git reset --hard origin/master
-   if ( cat "$HOME/.bashrc" | grep -i "PATH=\$PATH:$PWDIR" );then
-	echo "Path OK!"
-      else
-	echo "PATH=\$PATH:$PWDIR" >> $HOME/.bashrc
-	alias gcHistory="$PWDIR/gcHistory"
-   fi
+
 fi
 
 if [ -d "$GCPATH" ];then
 	echo "gchmod OK!"
    else
   if [ -e "$PWDIR/gcHistory" ];then
-	chmod +x $PWDIR/gcHistory
+	chmod +x "$PWDIR/gcHistory"
 	bash "$PWDIR/gcHistory" --create-virtual-machine
 if [ -z "$@" ];then
+ if [ -e "$PWSET" ];then
+	bash "$PWDIR/gcHistory" --install "$RLSET"
+#DIR
+if [ -d "$GCDIR" ];then
+#EXEC
+  if [ -e "$GCEXEC" ];then
+	read -t 3
+	clear
+    else
+	echo "O executável GrandChase não existe..."
+	echo "Para reinstalar, faça o comando \"gcHistory --reinstall /CAMINHO/setup.exe\""
 	exit 0
+  fi
+#EXEC
+   else
+	echo "A instalação do Grand Chase History foi cancelada..."
+
+	echo "Para reinstalar, execute novamente o instalador"
+	echo "Ou faça o comando \"gcHistory --install /CAMINHO/setup.exe\""
+	exit 0
+fi
+#DIR
+   else
+	exit 0
+ fi
    else
 	clear
 	bash "$PWDIR/gcHistory" --install "$RLSET"
+#DIR
+if [ -d "$GCDIR" ];then
+#EXEC
+  if [ -e "$GCEXEC" ];then
+	read -t 3
+	clear
+    else
+	echo "O executável GrandChase não existe..."
+	echo "Para reinstalar, faça o comando \"gcHistory --reinstall /CAMINHO/setup.exe\""
+	exit 0
+  fi
+#EXEC
+   else
+	echo "A instalação do Grand Chase History foi cancelada..."
+
+	echo "Para reinstalar, execute novamente o instalador"
+	echo "Ou faça o comando \"gcHistory --install /CAMINHO/setup.exe\""
+	exit 0
+fi
+#DIR
 fi
      else
 	echo "Erro, o comando \"gcHistory\" não existe"
@@ -129,7 +186,22 @@ fi
   fi 
 fi
 
+#PATH
+   if ( cat "$HOME/.bashrc" | grep -i "PATH=\$PATH:$PWDIR" );then
+	echo "Path OK!"
+      else
+	echo "PATH=\$PATH:$PWDIR" >> "$HOME/.bashrc"
+   fi
+#PATH
 
+#PATHEX
+if echo "$PATH" | grep "$PWDIR" >> /dev/null ;then
+	exit 0
+
+  else
+	"$SECTION"
+fi
+#PATHEX
 
 
 	exit 0
@@ -140,5 +212,3 @@ fi
 	echo "Diretório inválido!"
 	exit 0
 fi
-
-
