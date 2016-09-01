@@ -55,9 +55,13 @@ if [ -z "$@" ];then
 fi
 #File
 
+##xterm
+if ( whereis xterm | grep bin ) >> /dev/null ;then
+##cabextract
+if ( whereis cabextract | grep bin ) >> /dev/null ;then
 ##git
 if ( whereis git | grep bin ) >> /dev/null ;then
-	echo "Iniciando o download e configuração dos arquivos..."
+	echo "Iniciando configuração dos arquivos..."
 	read -t 3
   else
 	echo "Deve ter o \"git\" instalado no sistema!"
@@ -65,6 +69,18 @@ if ( whereis git | grep bin ) >> /dev/null ;then
 	exit 0
 fi
 ##git
+  else
+	echo "Deve ter o \"cabextract\" instalado no sistema!"
+	read -t 5
+	exit 0
+fi
+##cabextract
+  else
+	echo "Deve ter o \"xterm\" instalado no sistema!"
+	read -t 5
+	exit 0
+fi
+##xterm
 
 ### DIRINST
 clear
