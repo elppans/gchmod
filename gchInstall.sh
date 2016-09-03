@@ -58,7 +58,7 @@ fi
 ##xterm
 if ( whereis xterm | grep bin ) >> /dev/null ;then
 ##cabextract
-if ( whereis cabextract | grep bin ) >> /dev/null ;then
+#if ( whereis cabextract | grep bin ) >> /dev/null ;then
 ##git
 if ( whereis git | grep bin ) >> /dev/null ;then
 	echo "Iniciando configuração dos arquivos..."
@@ -69,11 +69,11 @@ if ( whereis git | grep bin ) >> /dev/null ;then
 	exit 0
 fi
 ##git
-  else
-	echo "Deve ter o \"cabextract\" instalado no sistema!"
-	read -t 5
-	exit 0
-fi
+#  else
+#	echo "Deve ter o \"cabextract\" instalado no sistema!"
+#	read -t 5
+#	exit 0
+#fi
 ##cabextract
   else
 	echo "Deve ter o \"xterm\" instalado no sistema!"
@@ -104,6 +104,21 @@ INSTDIR=`dirname $0`
 
 cd "$INSTDIR" 
 PWDIR=`pwd`
+
+#PWDInst
+if [ -d $PWDIR ];then
+	clear
+	echo "Configurando o Grand Chase History em:"
+	read -t 3
+	echo "\"$PWDIR\""
+	echo ""
+	read -t 6
+	clear
+  else
+	echo "Não é possível configurar a máquina virtual!"
+	exit 0
+fi
+#PWDInst
 
 WINDIR="$PWDIR/bin"
 WINLIB="$PWDIR/lib"
@@ -140,6 +155,23 @@ if [ -e "$PWDIR/gcHistory" ];then
 
 fi
 
+#PATH
+   if ( cat "$HOME/.bashrc" | grep -i "PATH=\$PATH:$PWDIR" );then
+	echo "Path OK!"
+      else
+	echo "PATH=\$PATH:$PWDIR" >> "$HOME/.bashrc"
+   fi
+#PATH
+
+#WINE/CabExtract
+if [ -e "$WINDIR/cabextract" ];then
+	chmod +x "$WINDIR/cabextract"
+  else
+	echo "cabextract não foi encontrado!"
+	exit 0
+fi
+#WINE/CabExtract
+
 if [ -d "$GCPATH" ];then
 	echo "gchmod OK!"
    else
@@ -158,6 +190,14 @@ if [ -d "$GCDIR" ];then
     else
 	echo "O executável GrandChase não existe..."
 	echo "Para reinstalar, faça o comando \"gcHistory --reinstall /CAMINHO/setup.exe\""
+#PATHEX
+if echo "$PATH" | grep "$PWDIR" >> /dev/null ;then
+	exit 0
+
+  else
+	"$SECTION"
+fi
+#PATHEX
 	exit 0
   fi
 #EXEC
@@ -166,6 +206,14 @@ if [ -d "$GCDIR" ];then
 
 	echo "Para reinstalar, execute novamente o instalador"
 	echo "Ou faça o comando \"gcHistory --install /CAMINHO/setup.exe\""
+#PATHEX
+if echo "$PATH" | grep "$PWDIR" >> /dev/null ;then
+	exit 0
+
+  else
+	"$SECTION"
+fi
+#PATHEX
 	exit 0
 fi
 #DIR
@@ -184,6 +232,14 @@ if [ -d "$GCDIR" ];then
     else
 	echo "O executável GrandChase não existe..."
 	echo "Para reinstalar, faça o comando \"gcHistory --reinstall /CAMINHO/setup.exe\""
+#PATHEX
+if echo "$PATH" | grep "$PWDIR" >> /dev/null ;then
+	exit 0
+
+  else
+	"$SECTION"
+fi
+#PATHEX
 	exit 0
   fi
 #EXEC
@@ -192,6 +248,14 @@ if [ -d "$GCDIR" ];then
 
 	echo "Para reinstalar, execute novamente o instalador"
 	echo "Ou faça o comando \"gcHistory --install /CAMINHO/setup.exe\""
+#PATHEX
+if echo "$PATH" | grep "$PWDIR" >> /dev/null ;then
+	exit 0
+
+  else
+	"$SECTION"
+fi
+#PATHEX
 	exit 0
 fi
 #DIR
@@ -201,14 +265,6 @@ fi
 	exit 0
   fi 
 fi
-
-#PATH
-   if ( cat "$HOME/.bashrc" | grep -i "PATH=\$PATH:$PWDIR" );then
-	echo "Path OK!"
-      else
-	echo "PATH=\$PATH:$PWDIR" >> "$HOME/.bashrc"
-   fi
-#PATH
 
 #PATHEX
 if echo "$PATH" | grep "$PWDIR" >> /dev/null ;then
