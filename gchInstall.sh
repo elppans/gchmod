@@ -56,7 +56,7 @@ fi
 #File
 
 ##xterm
-if ( whereis xterm | grep bin ) >> /dev/null ;then
+#if ( whereis xterm | grep bin ) >> /dev/null ;then
 ##cabextract
 #if ( whereis cabextract | grep bin ) >> /dev/null ;then
 ##git
@@ -75,11 +75,11 @@ fi
 #	exit 0
 #fi
 ##cabextract
-  else
-	echo "Deve ter o \"xterm\" instalado no sistema!"
-	read -t 5
-	exit 0
-fi
+  #else
+	#echo "Deve ter o \"xterm\" instalado no sistema!"
+	#read -t 5
+	#exit 0
+#fi
 ##xterm
 
 ### DIRINST
