@@ -1,9 +1,8 @@
 #!/bin/bash
 
-#help
-case "$@" in
-	-h|--help)
-	echo "
+##TXT
+  case $LANG in
+   pt*) GCMSG001="
  "$0", um aplicativo para ajudar a instalar a Máquina Virtual e o Grand Chase History de forma fácil.
  Uso: "$0" /caminho/do/instalador
 
@@ -16,6 +15,43 @@ case "$@" in
  Para que seja feita a instalação do jogo, deve usar o aplicativo gcHistory com o parâmetro para instalar.
  Para saber mais, consulte o Help do gcHistory!
 "
+GCMSG002="Modo somente criar/atualizar a máquina virtual..."
+GCMSG003="O arquivo especificado não existe!"
+GCMSG004="Iniciando configuração dos arquivos..."
+GCMSG005="Deve ter o \"git\" instalado no sistema!"
+GCMSG006=" Digite o local onde quer instalar o Grand Chase History:
+ Exemplo: /home/USER/jogo
+ Se omitido, o jogo será instalado em \"$HOME/.gch\"."
+GCMSG006A=" Local do jogo [ ENTER para o padrão ] : "
+GCMSG007="Configurando o Grand Chase History em:"
+GCMSG008="Não é possível configurar a máquina virtual!"
+GCMSG009="Falha no Download do Wine!"
+GCMSG010="cabextract não foi encontrado!"
+GCMSG011="O executável GrandChase não existe...
+Para reinstalar, faça o comando \"gcHistory --reinstall /CAMINHO/setup.exe\""
+GCMSG012="A instalação do Grand Chase History foi cancelada...
+Para reinstalar, execute novamente o instalador
+Ou faça o comando \"gcHistory --install /CAMINHO/setup.exe\""
+GCMSG013="O executável GrandChase não existe...
+Para reinstalar, faça o comando \"gcHistory --reinstall /CAMINHO/setup.exe\""
+GCMSG014="A instalação do Grand Chase History foi cancelada...
+Para reinstalar, execute novamente o instalador
+Ou faça o comando \"gcHistory --install /CAMINHO/setup.exe\""
+GCMSG015="Erro, o comando \"gcHistory\" não existe"
+GCMSG016="Diretório inválido!"
+GCMSGEX02="Path OK!"
+GCMSGEX03="gchmod OK!"
+ ;;
+   *) GCMSG001=
+
+ ;;
+  esac
+##TXT
+
+#help
+case "$@" in
+	-h|--help)
+echo "$GCMSG001"
 	exit 0
 ;;
 esac
@@ -39,7 +75,7 @@ if [ -z "$@" ];then
  if [ -e "$PWSET" ];then
 	RLSET=`readlink -m "$PWSET"`
    else
-	echo "Modo somente criar/atualizar a máquina virtual..."
+	echo "$GCMSG002"
 	read -t 5
  fi
   else
@@ -48,7 +84,7 @@ if [ -z "$@" ];then
   if [ -e "$RLSET" ];then
 	clear
      else
-	echo "O arquivo especificado não existe!"
+	echo "$GCMSG003"
 	exit 0
   fi
 	
@@ -61,10 +97,10 @@ fi
 #if ( whereis cabextract | grep bin ) >> /dev/null ;then
 ##git
 if ( whereis git | grep bin ) >> /dev/null ;then
-	echo "Iniciando configuração dos arquivos..."
+	echo "$GCMSG004"
 	read -t 3
   else
-	echo "Deve ter o \"git\" instalado no sistema!"
+	echo "$GCMSG005"
 	read -t 5
 	exit 0
 fi
@@ -84,11 +120,8 @@ fi
 
 ### DIRINST
 clear
-echo -e " Digite o local onde quer instalar o Grand Chase History:"
-echo -e " Exemplo: /home/USER/jogo"
-echo -e "\n Se omitido, o jogo será instalado em \"$HOME/.gch\".\n"
-
-read -p " Local do jogo [ ENTER para o padrão ] : " DIRGCINS
+	echo "$GCMSG006"
+	read -p "$GCMSG006A" DIRGCINS
 
 if [ -z "$DIRGCINS" ];then
 	DIRGCINS="$HOME/.gch"
@@ -104,18 +137,19 @@ INSTDIR=`dirname $0`
 
 cd "$INSTDIR" 
 PWDIR=`pwd`
+GCMSG007A="\"$PWDIR\""
 
 #PWDInst
 if [ -d $PWDIR ];then
 	clear
-	echo "Configurando o Grand Chase History em:"
+	echo "$GCMSG007"
 	read -t 3
-	echo "\"$PWDIR\""
+	echo "$GCMSG007A"
 	echo ""
 	read -t 6
 	clear
   else
-	echo "Não é possível configurar a máquina virtual!"
+	echo "$GCMSG008"
 	exit 0
 fi
 #PWDInst
@@ -125,6 +159,7 @@ WINLIB="$PWDIR/lib"
 GCPATH="$PWDIR/gchmod"
 GCDIR="$GCPATH/drive_c/Program Files/Grand Chase History"
 GCEXEC="$GCDIR/GrandChase.exe"
+GCMSGEX01="$(wine --version) OK!"
 
 ### Install
 if [ -e "$PWDIR/gcHistory" ];then
@@ -140,9 +175,9 @@ if [ -e "$PWDIR/gcHistory" ];then
    else
 	git clone https://github.com/elppans/wine-staging-1.9.15_IndexVertexBlending-1.9.11.i686 $PWDIR
  if [ -e "$PWDIR/bin/wine" ];then
-	echo "$(wine --version) OK!"
+	echo "$GCMSGEX01"
     else
-	echo "Falha no Download do Wine!"
+	echo "$GCMSG009"
 	exit 0
  fi
 	mkdir -p "$PWDIR/gcmd"
@@ -157,7 +192,7 @@ fi
 
 #PATH
    if ( cat "$HOME/.bashrc" | grep -i "PATH=\$PATH:$PWDIR" );then
-	echo "Path OK!"
+	echo "$GCMSGEX02"
       else
 	echo "PATH=\$PATH:$PWDIR" >> "$HOME/.bashrc"
    fi
@@ -167,13 +202,13 @@ fi
 if [ -e "$WINDIR/cabextract" ];then
 	chmod +x "$WINDIR/cabextract"
   else
-	echo "cabextract não foi encontrado!"
+	echo "$GCMSG010"
 	exit 0
 fi
 #WINE/CabExtract
 
 if [ -d "$GCPATH" ];then
-	echo "gchmod OK!"
+	echo "$GCMSGEX03"
    else
   if [ -e "$PWDIR/gcHistory" ];then
 	chmod +x "$PWDIR/gcHistory"
@@ -188,8 +223,7 @@ if [ -d "$GCDIR" ];then
 	read -t 3
 	clear
     else
-	echo "O executável GrandChase não existe..."
-	echo "Para reinstalar, faça o comando \"gcHistory --reinstall /CAMINHO/setup.exe\""
+	echo "$GCMSG011"
 #PATHEX
 if echo "$PATH" | grep "$PWDIR" >> /dev/null ;then
 	exit 0
@@ -202,10 +236,7 @@ fi
   fi
 #EXEC
    else
-	echo "A instalação do Grand Chase History foi cancelada..."
-
-	echo "Para reinstalar, execute novamente o instalador"
-	echo "Ou faça o comando \"gcHistory --install /CAMINHO/setup.exe\""
+	echo "$GCMSG012"
 #PATHEX
 if echo "$PATH" | grep "$PWDIR" >> /dev/null ;then
 	exit 0
@@ -230,8 +261,7 @@ if [ -d "$GCDIR" ];then
 	read -t 3
 	clear
     else
-	echo "O executável GrandChase não existe..."
-	echo "Para reinstalar, faça o comando \"gcHistory --reinstall /CAMINHO/setup.exe\""
+	echo "$GCMSG013"
 #PATHEX
 if echo "$PATH" | grep "$PWDIR" >> /dev/null ;then
 	exit 0
@@ -244,10 +274,7 @@ fi
   fi
 #EXEC
    else
-	echo "A instalação do Grand Chase History foi cancelada..."
-
-	echo "Para reinstalar, execute novamente o instalador"
-	echo "Ou faça o comando \"gcHistory --install /CAMINHO/setup.exe\""
+	echo "$GCMSG014"
 #PATHEX
 if echo "$PATH" | grep "$PWDIR" >> /dev/null ;then
 	exit 0
@@ -261,7 +288,7 @@ fi
 #DIR
 fi
      else
-	echo "Erro, o comando \"gcHistory\" não existe"
+	echo "$GCMSG015"
 	exit 0
   fi 
 fi
@@ -281,6 +308,6 @@ fi
 ###  DIRNAME
 
    else
-	echo "Diretório inválido!"
+	echo "$GCMSG016"
 	exit 0
 fi
