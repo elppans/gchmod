@@ -42,8 +42,45 @@ GCMSG016="Diretório inválido!"
 GCMSGEX02="Path OK!"
 GCMSGEX03="gchmod OK!"
  ;;
-   *) GCMSG001=
+   *) GCMSG001="
+ "$0", a app that helps to install grand chase.
+ Use: "$0" /path/to/setup
 
+    Example:
+  "$0" /home/USER/Download/Setup.exe
+
+  -h,   --help                         output this help.
+
+ If parameter is null, the installer will only create the virtual machine (wine’s prefix).
+ In oder to conclude the installation, you must use the gcHistory application with the input install.
+ For more information, use the Help menu
+"
+GCMSG002="Just update/create virtual machine (wine’s prefix)..."
+GCMSG003="Not found!"
+GCMSG004="Starting configuration files..."
+GCMSG005="Please install Git in order to use this script!"
+GCMSG006=" Chose (type) where to install grand chase history:
+ Example: /home/USER/game
+ If left null, the default installation’s folder will be: \"$HOME/.gch\"."
+GCMSG006A=" Path for the game [ ENTER Will set default path ] : "
+GCMSG007=" Setting up Grand Chase History in:"
+GCMSG008="Failed to set up virtual machine!"
+GCMSG009="Wine’s download failed!"
+GCMSG010="cabextract not found!"
+GCMSG011="Grand chase executable not found!...
+Use this command to reinstall:  \"gcHistory --reinstall /Path/setup.exe\""
+GCMSG012="Stopped installation...
+if wish use the installer for a new installation
+Or:  \"gcHistory --install /Path/setup.exe\""
+GCMSG013="Grand Chase executable not found!...
+Use this coomand to reinstall: \"gcHistory --reinstall /Path/setup.exe\""
+GCMSG014="Grand Chase installation stopped...
+if wish use the installer for a new installation
+Or:  \"gcHistory --install /Path/setup.exe\""
+GCMSG015="Error, invalid input "
+GCMSG016=" Invalid folder!"
+GCMSGEX02="Path OK!"
+GCMSGEX03="gchmod OK!"
  ;;
   esac
 ##TXT
