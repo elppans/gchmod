@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=setup-LNX
+Exec=bash setup_lo.sh
+StartupNotify=false
+Terminal=false
+Hidden=false
