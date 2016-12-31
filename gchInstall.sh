@@ -133,13 +133,29 @@ fi
 ##cabextract
 #if ( whereis cabextract | grep bin ) >> /dev/null ;then
 ##git
-if ( whereis git | grep bin ) >> /dev/null ;then
+if ( whereis git | grep bin | head -n 1 ) >> /dev/null ;then
 	echo "$GCMSG004"
 	read -t 3
+  else
+if [ -e `pwd`/git ];then
+	echo "$GCMSG004"
+  else
+if [ -e /bin/git ];then
+	echo "$GCMSG004"
+  else
+if [ -e /usr/bin/git ];then
+	echo "$GCMSG004"
+  else
+if [ -e /usr/local/bin/git ];then
+	echo "$GCMSG004"
   else
 	echo "$GCMSG005"
 	read -t 5
 	exit 0
+fi
+fi
+fi
+fi
 fi
 ##git
 #  else
