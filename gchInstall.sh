@@ -133,7 +133,7 @@ fi
 ##cabextract
 #if ( whereis cabextract | grep bin ) >> /dev/null ;then
 ##git
-if ( whereis git | grep bin | head -n 1 ) >> /dev/null ;then
+if ( which git ) >> /dev/null ;then
 	echo "$GCMSG004"
 	read -t 3
   else
